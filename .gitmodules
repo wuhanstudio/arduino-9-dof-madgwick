@@ -1,0 +1,3 @@
+[submodule "MotionCal"]
+	path = MotionCal
+	url = https://github.com/PaulStoffregen/MotionCal
