@@ -29,6 +29,9 @@ const float soft_iron[3][3] = {
   { 0, 0, 1 }
 };
 
+// Change this
+const float declination = 0;
+
 void setup() {
   // Initialize the serial communication:
   Serial.begin(115200);
@@ -59,10 +62,10 @@ void setup() {
       ;
   }
 
-  filter.begin(25);
+  filter.begin(100);
 
   // initialize variables to pace updates to correct rate
-  microsPerReading = 1000000 / 25;
+  microsPerReading = 1000000 / 100;
   microsPrevious = micros();
 }
 
@@ -137,7 +140,7 @@ void loop() {
     // print the heading, pitch and roll
     roll = filter.getRoll();
     pitch = filter.getPitch();
-    heading = filter.getYaw();
+    heading = filter.getYaw() - declination;
 
     Serial.print("Orientation: ");
     Serial.print(heading);
@@ -147,6 +150,6 @@ void loop() {
     Serial.println(roll);
 
     // increment previous time, so we keep proper pace
-    microsPrevious = microsPrevious + microsPerReading;
+    microsPrevious = microsNow;
   }
 }
