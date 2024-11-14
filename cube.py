@@ -10,7 +10,7 @@ from OpenGL.GLU import *
 import pygame
 from pygame.locals import *
 
-SERIAL_PORT = 'COM9'
+SERIAL_PORT = 'COM6'
 
 exit_event = threading.Event()
 
@@ -68,7 +68,7 @@ def draw():
         glRotatef(0.0, 0.0, 1.0, 0.0)
 
     glRotatef(ay, 1.0, 0.0, 0.0)           # Roll,  rotate around x-axis
-    glRotatef(ax, 0.0, 0.0, -1.0)           # Pitch, rotate around z-axis
+    glRotatef(ax, 0.0, 0.0, 1.0)           # Pitch, rotate around z-axis
 
     glBegin(GL_QUADS)	
     glColor3f(0.0,1.0,0.0)
@@ -133,7 +133,7 @@ def worker_serial():
                 pitch = float(data[2])
                 roll = float(data[3])
 
-                print(roll, pitch, yaw)
+                # print(roll, pitch, yaw)
                 # print("Acc: %f %f %f Gyr: %f %f %f Pos %f %f %f" % (ax, ay, az, x, y, z, roll, pitch, yaw))
 
                 ax = roll

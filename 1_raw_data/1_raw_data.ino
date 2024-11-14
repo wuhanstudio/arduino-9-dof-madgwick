@@ -74,9 +74,9 @@ void loop() {
   /* Magnetometer Data in uT */
   mag.getEvent(&event);
 
-  float mx = event.magnetic.x;
-  float my = event.magnetic.y;
-  float mz = event.magnetic.z;
+  float mx = event.magnetic.x * 10;
+  float my = event.magnetic.y * 10;
+  float mz = event.magnetic.z * 10;
 
   // Hard Iron Calibration
   int hi_cal[3];
@@ -106,11 +106,11 @@ void loop() {
   Serial.print((int)az);
   Serial.print(",");
 
-  Serial.print((int)(mag_data[0] * 10));
+  Serial.print((int)(mag_data[0]));
   Serial.print(",");
-  Serial.print((int)(mag_data[1] * 10));
+  Serial.print((int)(mag_data[1]));
   Serial.print(",");
-  Serial.println((int)(mag_data[2] * 10));
+  Serial.println((int)(mag_data[2]));
 
   // Make delay between readings
   delay(10);

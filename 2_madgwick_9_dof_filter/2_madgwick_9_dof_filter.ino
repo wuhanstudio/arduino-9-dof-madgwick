@@ -5,8 +5,11 @@
 #include <ITG3200.h>
 
 #include <MadgwickAHRS.h>
+#include <Adafruit_AHRS.h>
 
 Madgwick filter;
+// Adafruit_Mahony filter; 
+
 unsigned long microsPerReading, microsPrevious;
 
 // Gyroscope
@@ -62,10 +65,10 @@ void setup() {
       ;
   }
 
-  filter.begin(100);
+  filter.begin(50);
 
   // initialize variables to pace updates to correct rate
-  microsPerReading = 1000000 / 100;
+  microsPerReading = 1000000 / 50;
   microsPrevious = micros();
 }
 
@@ -96,9 +99,9 @@ void loop() {
     /* Magnetometer Data in uT */
     mag.getEvent(&event);
 
-    mx = event.magnetic.x;
-    my = event.magnetic.y;
-    mz = event.magnetic.z;
+    mx = event.magnetic.x * 10;
+    my = event.magnetic.y * 10;
+    mz = event.magnetic.z * 10;
 
     // Hard Iron Calibration
     int hi_cal[3];
@@ -135,7 +138,7 @@ void loop() {
     Serial.println((int)(mag_data[2] * 10));
 
     // update the filter, which computes orientation
-    filter.update(gx, gy, gz, ax, ay, az, mx, my, mz);
+    filter.update(gx, gy, gz, ax, ay, az, -mx, -my, mz);
 
     // print the heading, pitch and roll
     roll = filter.getRoll();

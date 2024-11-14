@@ -36,10 +36,10 @@ void setup() {
   // accel.setRange(ADXL345_RANGE_4_G);
   accel.setRange(ADXL345_RANGE_2_G);
 
-  filter.begin(25);
+  filter.begin(100);
 
   // initialize variables to pace updates to correct rate
-  microsPerReading = 1000000 / 25;
+  microsPerReading = 1000000 / 100;
   microsPrevious = micros();
 }
 
