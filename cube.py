@@ -67,8 +67,8 @@ def draw():
     else:
         glRotatef(0.0, 0.0, 1.0, 0.0)
 
-    glRotatef(-1*ax, 1.0, 0.0, 0.0)        # Roll,  rotate around x-axis
-    glRotatef(ay, 0.0, 0.0, 1.0)           # Pitch, rotate around z-axis
+    glRotatef(ay, 1.0, 0.0, 0.0)           # Roll,  rotate around x-axis
+    glRotatef(ax, 0.0, 0.0, -1.0)           # Pitch, rotate around z-axis
 
     glBegin(GL_QUADS)	
     glColor3f(0.0,1.0,0.0)
@@ -129,9 +129,9 @@ def worker_serial():
                 # y = float(data[4])
                 # z = float(data[5])
                 data = data[1].decode('ASCII').split(" ")
-                roll = float(data[3])
-                pitch = float(data[2])
                 yaw = float(data[1])
+                pitch = float(data[2])
+                roll = float(data[3])
 
                 print(roll, pitch, yaw)
                 # print("Acc: %f %f %f Gyr: %f %f %f Pos %f %f %f" % (ax, ay, az, x, y, z, roll, pitch, yaw))
@@ -139,6 +139,8 @@ def worker_serial():
                 ax = roll
                 ay = pitch
                 az = yaw
+            # elif data[0].decode('ASCII') == "Raw":
+                # print(line)
 
         except Exception as e:
             print(e)
